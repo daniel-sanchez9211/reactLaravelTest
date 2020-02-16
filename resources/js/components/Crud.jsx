@@ -1,80 +1,87 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 
-class Crud extends Component {
+const Crud = (props) => {
 
-  state = {
-    friends: [],
-    name: '',
-    email: '',
-    updateName: '',
-    updateEmail: '',
-    updating: null
-  }
+  const [friends, setFriends] = useState([])
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [updateName, setUpdateName] = useState('')
+  const [updateEmail, setUpdateEmail] = useState('')
+  const [updating, setUpdating] = useState(null)
 
-  getFriends = (clear = false) => {
+  const getFriends = (clear = false) => {
     axios.get('/api/users').then(response => {
-      this.setState({ friends: response.data })
+      setFriends(response.data)
     })
-      .then(() => clear && this.setState({ name: '', email: '', updating: null }))
+      .then(() => {
+        if (clear) {
+          setName('')
+          setEmail('')
+          setUpdating(null)
+        }
+      })
     // axios.get('/api/users/detalhe/', {
     //   params: {id: 54}
     // }).then(response => {
-    //   this.setState({ friends: [response.data] })
+    //   setState({ friends: [response.data] })
     // })
   }
 
-  componentDidMount() {
-    this.getFriends()
-  }
+  useEffect(() => {
+    getFriends()
+  }, []);
 
-  handleNameChange = (e) => {
+  const handleNameChange = (e) => {
     const name = e.target.value
-    this.setState({ name })
+    setName(name)
   }
 
-  handleUpdateNameChange = (e) => {
+  const handleUpdateNameChange = (e) => {
     const name = e.target.value
-    this.setState({ updateName: name })
+    setUpdateName(name)
   }
 
-  handleEmailChange = (e) => {
+  const handleEmailChange = (e) => {
     const email = e.target.value
-    this.setState({ email })
+    setEmail(email)
   }
 
-  handleUpdateEmailChange = (e) => {
+  const handleUpdateEmailChange = (e) => {
     const email = e.target.value
-    this.setState({ updateEmail: email })
+    setUpdateEmail({ updateEmail: email })
   }
 
-  addFriend = () => {
-    const { name, email } = this.state
+  const addFriend = () => {
     axios.post('/api/users/', {
       name,
       email,
     })
       .then(() => {
-        this.getFriends(true)
+        getFriends(true)
       })
       .catch(error => console.log(error))
-
   }
 
-  handleDelete = (id) => {
+  const handleDelete = (id) => {
     axios.delete('/api/users/', {
       params: { 'id': id }
     })
-      .then(() => this.getFriends())
+      .then(() => getFriends())
       .catch(error => console.log(error))
   }
 
-  showFieldToUpdate = (id, name, email) => this.state.updating === null ?
-    this.setState({ updating: id, updateEmail: email, updateName: name }) : this.setState({ updating: null })
+  const showFieldToUpdate = (id, name, email) => {
+    if (updating === null) {
+      setUpdating(id)
+      setUpdateEmail(email)
+      setUpdateName(name)
+    } else {
+      setUpdating(null)
+    }
+  }
 
-  updateFriend = (id) => {
-    this.setState
-    const { updateName, updateEmail } = this.state
+  const updateFriend = (id) => {
     axios.put('/api/users/', {
       updateName,
       updateEmail,
@@ -82,54 +89,49 @@ class Crud extends Component {
     }, {
       params: { 'id': id }
     })
-      .then(() => this.getFriends(true))
+      .then(() => getFriends(true))
       .catch(error => console.log(error))
   }
-
-  render() {
-    const { friends, updating } = this.state
-
-    return (
-      <div className="container-fluid p-5">
-        {friends.map((friend, i) => (
-          <div key={i} style={{
-            display: 'flex',
+  return (
+    <div className="container-fluid p-5">
+      {friends.map((friend, i) => (
+        <div key={i} style={{
+          display: 'flex',
+        }}>
+          <h3>{friend.name}</h3>
+          <div style={{
+            marginTop: '7px',
+            marginLeft: '10px',
+            cursor: 'pointer',
           }}>
-            <h3>{friend.name}</h3>
-            <div style={{
-              marginTop: '7px',
-              marginLeft: '10px',
-              cursor: 'pointer',
-            }}>
-              <span onClick={() => this.handleDelete(friend.id)}
-                title={`Exluir ${friend.name}`}> X </span>
-              <span style={{ color: '#bbb', margin: '0 8px' }} onClick={() =>
-                this.showFieldToUpdate(friend.id, friend.name, friend.email)}>{updating === friend.id ?
-                  'Cancelar' : 'Atualizar'}</span>
+            <span onClick={() => handleDelete(friend.id)}
+              title={`Exluir ${friend.name}`}> X </span>
+            <span style={{ color: '#bbb', margin: '0 8px' }} onClick={() =>
+              showFieldToUpdate(friend.id, friend.name, friend.email)}>{updating === friend.id ?
+                'Cancelar' : 'Atualizar'}</span>
 
-              {updating === friend.id &&
-                <span>
-                  <input className="px-1" type="text" placeholder="Nome" defaultValue={friend.name} onChange={this.handleUpdateNameChange} />
-                  <input className="px-1" type="email" placeholder="Email" defaultValue={friend.email} onChange={this.handleUpdateEmailChange} />
-                  <input className="px-1" type="button" value="Atualizar" onClick={() => this.updateFriend(friend.id)} />
-                </span>
-              }
+            {updating === friend.id &&
+              <span>
+                <input className="px-1" type="text" placeholder="Nome" defaultValue={friend.name} onChange={handleUpdateNameChange} />
+                <input className="px-1" type="email" placeholder="Email" defaultValue={friend.email} onChange={handleUpdateEmailChange} />
+                <input className="px-1" type="button" value="Atualizar" onClick={() => updateFriend(friend.id)} />
+              </span>
+            }
 
-            </div>
           </div>
-        ))}
+        </div>
+      ))}
+      <div>
         <div>
-          <div>
-            <div className="form-group m-10">
-              <input className="form-control w-25 m-1" type="text" placeholder="Nome" value={this.state.name} onChange={this.handleNameChange} />
-              <input className="form-control w-25 m-1" type="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
-              <input className="btn btn-primary mt-2" type="button" value="Adicionar amigo" onClick={this.addFriend} />
-            </div>
+          <div className="form-group m-10">
+            <input className="form-control w-25 m-1" type="text" placeholder="Nome" value={name} onChange={handleNameChange} />
+            <input className="form-control w-25 m-1" type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
+            <input className="btn btn-primary mt-2" type="button" value="Adicionar amigo" onClick={addFriend} />
           </div>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default Crud

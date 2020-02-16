@@ -80,6 +80,7 @@ class MainController extends Controller
      */
     public function update(Request $request)
     {
+        // dd(request('id'));
         $validatedData = $request->validate([
             'updateName' => 'required',
             'updateEmail' => 'required',

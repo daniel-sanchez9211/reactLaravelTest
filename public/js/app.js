@@ -51195,251 +51195,208 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
 
-var Crud =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(Crud, _Component);
+var Crud = function Crud(props) {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      friends = _useState2[0],
+      setFriends = _useState2[1];
 
-  function Crud() {
-    var _getPrototypeOf2;
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      name = _useState4[0],
+      setName = _useState4[1];
 
-    var _this;
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState6 = _slicedToArray(_useState5, 2),
+      email = _useState6[0],
+      setEmail = _useState6[1];
 
-    _classCallCheck(this, Crud);
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState8 = _slicedToArray(_useState7, 2),
+      updateName = _useState8[0],
+      setUpdateName = _useState8[1];
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState10 = _slicedToArray(_useState9, 2),
+      updateEmail = _useState10[0],
+      setUpdateEmail = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState12 = _slicedToArray(_useState11, 2),
+      updating = _useState12[0],
+      setUpdating = _useState12[1];
+
+  var getFriends = function getFriends() {
+    var clear = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/users').then(function (response) {
+      setFriends(response.data);
+    }).then(function () {
+      if (clear) {
+        setName('');
+        setEmail('');
+        setUpdating(null);
+      }
+    }); // axios.get('/api/users/detalhe/', {
+    //   params: {id: 54}
+    // }).then(response => {
+    //   setState({ friends: [response.data] })
+    // })
+  };
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    getFriends();
+  }, []);
+
+  var handleNameChange = function handleNameChange(e) {
+    var name = e.target.value;
+    setName(name);
+  };
+
+  var handleUpdateNameChange = function handleUpdateNameChange(e) {
+    var name = e.target.value;
+    setUpdateName(name);
+  };
+
+  var handleEmailChange = function handleEmailChange(e) {
+    var email = e.target.value;
+    setEmail(email);
+  };
+
+  var handleUpdateEmailChange = function handleUpdateEmailChange(e) {
+    var email = e.target.value;
+    setUpdateEmail({
+      updateEmail: email
+    });
+  };
+
+  var addFriend = function addFriend() {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/users/', {
+      name: name,
+      email: email
+    }).then(function () {
+      getFriends(true);
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  };
+
+  var handleDelete = function handleDelete(id) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/users/', {
+      params: {
+        'id': id
+      }
+    }).then(function () {
+      return getFriends();
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  };
+
+  var showFieldToUpdate = function showFieldToUpdate(id, name, email) {
+    if (updating === null) {
+      setUpdating(id);
+      setUpdateEmail(email);
+      setUpdateName(name);
+    } else {
+      setUpdating(null);
     }
+  };
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Crud)).call.apply(_getPrototypeOf2, [this].concat(args)));
-
-    _defineProperty(_assertThisInitialized(_this), "state", {
-      friends: [],
-      name: '',
-      email: '',
-      updateName: '',
-      updateEmail: '',
-      updating: null
+  var updateFriend = function updateFriend(id) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/api/users/', {
+      updateName: updateName,
+      updateEmail: updateEmail,
+      id: id
+    }, {
+      params: {
+        'id': id
+      }
+    }).then(function () {
+      return getFriends(true);
+    })["catch"](function (error) {
+      return console.log(error);
     });
+  };
 
-    _defineProperty(_assertThisInitialized(_this), "getFriends", function () {
-      var clear = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/users').then(function (response) {
-        _this.setState({
-          friends: response.data
-        });
-      }).then(function () {
-        return clear && _this.setState({
-          name: '',
-          email: '',
-          updating: null
-        });
-      }); // axios.get('/api/users/detalhe/', {
-      //   params: {id: 54}
-      // }).then(response => {
-      //   this.setState({ friends: [response.data] })
-      // })
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleNameChange", function (e) {
-      var name = e.target.value;
-
-      _this.setState({
-        name: name
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleUpdateNameChange", function (e) {
-      var name = e.target.value;
-
-      _this.setState({
-        updateName: name
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleEmailChange", function (e) {
-      var email = e.target.value;
-
-      _this.setState({
-        email: email
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleUpdateEmailChange", function (e) {
-      var email = e.target.value;
-
-      _this.setState({
-        updateEmail: email
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "addFriend", function () {
-      var _this$state = _this.state,
-          name = _this$state.name,
-          email = _this$state.email;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/users/', {
-        name: name,
-        email: email
-      }).then(function () {
-        _this.getFriends(true);
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleDelete", function (id) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/users/', {
-        params: {
-          'id': id
-        }
-      }).then(function () {
-        return _this.getFriends();
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "showFieldToUpdate", function (id, name, email) {
-      return _this.state.updating === null ? _this.setState({
-        updating: id,
-        updateEmail: email,
-        updateName: name
-      }) : _this.setState({
-        updating: null
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "updateFriend", function (id) {
-      _this.setState;
-      var _this$state2 = _this.state,
-          updateName = _this$state2.updateName,
-          updateEmail = _this$state2.updateEmail;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/api/users/', {
-        updateName: updateName,
-        updateEmail: updateEmail,
-        id: id
-      }, {
-        params: {
-          'id': id
-        }
-      }).then(function () {
-        return _this.getFriends(true);
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-    });
-
-    return _this;
-  }
-
-  _createClass(Crud, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.getFriends();
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      var _this$state3 = this.state,
-          friends = _this$state3.friends,
-          updating = _this$state3.updating;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container-fluid p-5"
-      }, friends.map(function (friend, i) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: i,
-          style: {
-            display: 'flex'
-          }
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, friend.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          style: {
-            marginTop: '7px',
-            marginLeft: '10px',
-            cursor: 'pointer'
-          }
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          onClick: function onClick() {
-            return _this2.handleDelete(friend.id);
-          },
-          title: "Exluir ".concat(friend.name)
-        }, " X "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          style: {
-            color: '#bbb',
-            margin: '0 8px'
-          },
-          onClick: function onClick() {
-            return _this2.showFieldToUpdate(friend.id, friend.name, friend.email);
-          }
-        }, updating === friend.id ? 'Cancelar' : 'Atualizar'), updating === friend.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "px-1",
-          type: "text",
-          placeholder: "Nome",
-          defaultValue: friend.name,
-          onChange: _this2.handleUpdateNameChange
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "px-1",
-          type: "email",
-          placeholder: "Email",
-          defaultValue: friend.email,
-          onChange: _this2.handleUpdateEmailChange
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "px-1",
-          type: "button",
-          value: "Atualizar",
-          onClick: function onClick() {
-            return _this2.updateFriend(friend.id);
-          }
-        }))));
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group m-10"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "form-control w-25 m-1",
-        type: "text",
-        placeholder: "Nome",
-        value: this.state.name,
-        onChange: this.handleNameChange
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "form-control w-25 m-1",
-        type: "email",
-        placeholder: "Email",
-        value: this.state.email,
-        onChange: this.handleEmailChange
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "btn btn-primary mt-2",
-        type: "button",
-        value: "Adicionar amigo",
-        onClick: this.addFriend
-      })))));
-    }
-  }]);
-
-  return Crud;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container-fluid p-5"
+  }, friends.map(function (friend, i) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      key: i,
+      style: {
+        display: 'flex'
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, friend.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        marginTop: '7px',
+        marginLeft: '10px',
+        cursor: 'pointer'
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      onClick: function onClick() {
+        return handleDelete(friend.id);
+      },
+      title: "Exluir ".concat(friend.name)
+    }, " X "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      style: {
+        color: '#bbb',
+        margin: '0 8px'
+      },
+      onClick: function onClick() {
+        return showFieldToUpdate(friend.id, friend.name, friend.email);
+      }
+    }, updating === friend.id ? 'Cancelar' : 'Atualizar'), updating === friend.id && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "px-1",
+      type: "text",
+      placeholder: "Nome",
+      defaultValue: friend.name,
+      onChange: handleUpdateNameChange
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "px-1",
+      type: "email",
+      placeholder: "Email",
+      defaultValue: friend.email,
+      onChange: handleUpdateEmailChange
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "px-1",
+      type: "button",
+      value: "Atualizar",
+      onClick: function onClick() {
+        return updateFriend(friend.id);
+      }
+    }))));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group m-10"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control w-25 m-1",
+    type: "text",
+    placeholder: "Nome",
+    value: name,
+    onChange: handleNameChange
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-control w-25 m-1",
+    type: "email",
+    placeholder: "Email",
+    value: email,
+    onChange: handleEmailChange
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "btn btn-primary mt-2",
+    type: "button",
+    value: "Adicionar amigo",
+    onClick: addFriend
+  })))));
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (Crud);
 
